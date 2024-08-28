@@ -1,5 +1,9 @@
-% The code for plotting the power rejection curve and noise transfer function using AO system parameters. 
-% See Supplementary Note 2 and Supplementary Note 5 for a detailed description.
+% Supplementary Software for the paper "Ultrafast adaptive optics for imaging the living human eye", by Yan Liu et al. from Indiana University.
+
+% This code is used for plotting the power rejection curve and noise transfer function using AO system parameters.
+
+% Please refer to Supplementary Note 2 and Supplementary Note 5 for detailed information.
+
 % Author: Yan Liu (yl144@iu.edu)
 
 clear
@@ -10,16 +14,23 @@ close all
 % See Supplementary Figure 1 and Supplementary Note 2 for the definition of these parameters.
 
 t_DM = 0.55e-3 % Deformable mirror (DM) response time constant, see Supplementary Figure 1 and Supplementary Note 2. Unit is second.
+
 t_computation = 1e-3*0.49 % Data processing time. Unit is second.
+
 t_shws  = 1e-3*[0.126];  % Integration (exposure) time of SHWS. Unit is second.
+
 t_readoutTransfer = 1e-3*[1.93] % Time for pixel readout and data transfer to a computer. Unit is second.
+
 t_delay = t_readoutTransfer + t_computation;
+
 AO_loop_rate = 233 % AO loop rate. Unit is Hz.
+
 t_hold  = 1/AO_loop_rate %  The period for the DM to hold a wavefront correction pattern. Unit is second.
+
 gain = [1]; % AO loop gain
 
 %%
-% Run the following section to calculate and plot the power rejection curve and noise transfer function. 
+% Run this section to calculate and plot the power rejection curve and noise transfer function. 
 f = linspace(0,max(AO_loop_rate/2),10000);
 
 s=1i*2*pi*f;
@@ -49,4 +60,6 @@ xlabel('Frequency (Hz)');
 ylabel('Magnitude');
 set(gcf,'color','w');
 lg = legend('Power rejection curve', 'Noise transfer function')
+frame_h = get(handle(gcf),'JavaFrame');
+set(frame_h,'Maximized',1);
 lg.Position = [0.8463 0.8553 0.0452 0.0544];
