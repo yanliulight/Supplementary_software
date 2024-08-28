@@ -1,20 +1,25 @@
-% Code to plot the power rejection curve and noise transfer function. See
-% Supplementary Note 2 and Supplementary Note 5 for a detailed description.
-% Author: Yan Liu, yl144@iu.edu
-
-% User input. See Supplementary Figure 1 for the definition of user-input variables.
+% The code for plotting the power rejection curve and noise transfer function using AO system parameters. 
+% See Supplementary Note 2 and Supplementary Note 5 for a detailed description.
+% Author: Yan Liu (yl144@iu.edu)
 
 clear
-t_DM = 0.55e-3 %[s], DM response time, See Supplementary Figure 1 and Supplementary Note 2
-t_computation = 1e-3*0.49 % [s], computation time
-t_shws  = 1e-3*[0.126];  % [s], integration (exposure) time of SHWS
-t_readoutTransfer = 1e-3*[1.93] % [s], time for data readout, transfer
+close all
+%%
+% User input
+% Please update the following AO system parameters using those from your system, then run this section.
+% See Supplementary Figure 1 and Supplementary Note 2 for the definition of these parameters.
+
+t_DM = 0.55e-3 % Deformable mirror (DM) response time constant, see Supplementary Figure 1 and Supplementary Note 2. Unit is second.
+t_computation = 1e-3*0.49 % Data processing time. Unit is second.
+t_shws  = 1e-3*[0.126];  % Integration (exposure) time of SHWS. Unit is second.
+t_readoutTransfer = 1e-3*[1.93] % Time for pixel readout and data transfer to a computer. Unit is second.
 t_delay = t_readoutTransfer + t_computation;
-AO_loop_rate = 233 % [Hz] AO loop rate
-t_hold  = 1/AO_loop_rate % [s]
+AO_loop_rate = 233 % AO loop rate. Unit is Hz.
+t_hold  = 1/AO_loop_rate %  The period for the DM to hold a wavefront correction pattern. Unit is second.
 gain = [1]; % AO loop gain
 
-% Calculation
+%%
+% Run the following section to calculate and plot the power rejection curve and noise transfer function. 
 f = linspace(0,max(AO_loop_rate/2),10000);
 
 s=1i*2*pi*f;
